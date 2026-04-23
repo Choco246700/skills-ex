@@ -1214,6 +1214,8 @@
       justify-content: flex-start;
       gap: 16px;
       flex-wrap: wrap;
+      position: relative;
+      z-index: 100;
     }
 
     .btn-primary {
@@ -1256,7 +1258,7 @@
       padding: 180px 0 100px 0; /* Pushed further down */
       width: 100%;
       border-radius: 100% 100% 0 0 / 80px 80px 0 0;
-      margin-top: -80px;
+      margin-top: -40px; /* Brought down from -80px to avoid overlapping buttons */
       position: relative;
       z-index: 10;
       box-shadow: 0 -20px 40px rgba(26,18,8,0.03);
