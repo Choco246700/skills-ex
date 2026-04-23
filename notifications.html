@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Skills EX — Notifications</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,300;9..144,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header id="mainHeader">
+    <div class="header-top">
+      <a href="homepage.html" class="logo-brand">Skills<span> EX</span></a>
+      <nav class="main-nav" id="mainNav">
+        <ul class="nav-list">
+          <li><a href="homepage.html" class="nav-link">Home</a></li>
+          <li><a href="explore.html" class="nav-link">Explore</a></li>
+          <li><a href="app.html" class="nav-link">Exchange</a></li>
+        </ul>
+        <div id="authHeaderAction">
+          <a href="signup.html" class="nav-cta">Sign Up</a>
+        </div>
+      </nav>
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main style="max-width: 1000px; margin: 0 auto; padding-top: 48px;">
+    <div class="section-header" style="margin-bottom: 32px;">
+      <h2 class="section-title" style="font-size: 32px;">Your Notifications</h2>
+    </div>
+    
+    <p style="color: var(--muted); margin-bottom: 32px; font-size: 15px;">
+      These community members are looking to learn precisely what you can teach! Reach out to them and set up a mentorship or exchange.
+    </p>
+
+    <!-- Grid to insert matching members -->
+    <div id="notificationsGrid" class="cards-grid">
+      <!-- Loading state -->
+      <div class="empty-state" style="grid-column: 1/-1;">
+        <p class="empty-text">Loading notifications...</p>
+      </div>
+    </div>
+  </main>
+
+  <div id="toast"></div>
+  <script src="./index.js"></script>
+</body>
+</html>

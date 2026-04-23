@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Skills EX — Admin Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,300;9..144,700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./styles.css"/>
+  <style>
+    /* Admin specific layout tweaks */
+    .admin-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+    .admin-main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 40px;
+    }
+    .admin-header {
+      margin-bottom: 40px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .admin-title-group h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 32px;
+      color: var(--ink);
+    }
+    .admin-title-group p {
+      color: var(--muted);
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body class="admin-page">
+
+  <!-- HEADER -->
+  <header id="mainHeader">
+    <div class="header-top">
+      <a href="http://localhost:8000/homepage.html" class="logo-brand">Skills <span>EX</span> Admin</a>
+      <nav class="main-nav" id="mainNav">
+        <ul class="nav-list">
+          <li><a href="http://localhost:8000/homepage.html" class="nav-link">Main Site</a></li>
+        </ul>
+        <div id="authHeaderAction">
+          <a href="signup.html" class="nav-cta">Sign Up</a>
+        </div>
+      </nav>
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+ 
+  <main class="admin-main">
+    <div class="admin-header">
+      <div class="admin-title-group">
+        <h2>Community Overview</h2>
+        <p>Monitor members and skill connections in real-time.</p>
+      </div>
+      <div class="pill pill-gold">Protected Admin View</div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="admin-stats">
+      <div class="stat">
+        <div class="stat-num" id="statUsers">0</div>
+        <div class="stat-label">Total Members</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" id="statMatches">0</div>
+        <div class="stat-label">Live Connections</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" id="statSkills">0</div>
+        <div class="stat-label">Unique Skills</div>
+      </div>
+    </div>
+
+    <div class="admin-grid-layout" style="display: grid; grid-template-columns: 1fr 400px; gap: 48px; align-items: start;">
+      
+      <!-- Members Column -->
+      <section>
+        <div class="section-header">
+          <span class="section-title">Member Registry</span>
+          <span class="pill pill-terra" id="userCount">0 people</span>
+        </div>
+        <div class="cards-grid" id="usersGrid">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- Connections Column -->
+      <section>
+        <div class="section-header">
+          <span class="section-title">Recent Connections</span>
+          <span class="pill pill-sage" id="matchCount">0 found</span>
+        </div>
+        <div id="matchesContainer">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+    </div>
+  </main>
+ 
+  <div id="toast"></div>
+
+<script src="./index.js"></script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Skills EX — Explore Community Skills</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,300;9..144,700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./styles.css"/>
+  <style>
+    .explore-hero {
+      padding: 80px 40px 60px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.4);
+      margin-bottom: 40px;
+      border-bottom: 1px solid var(--border);
+    }
+    .explore-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px 100px;
+    }
+    .explore-search-box {
+      margin: 0 auto 60px;
+      position: relative;
+      inline-size: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+      max-width: 600px;
+    }
+    .category-select {
+      height: 56px;
+      padding: 0 24px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      color: var(--ink);
+      outline: none;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(26,18,8,0.05);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
+    }
+    .category-select:focus {
+      border-color: var(--terracotta);
+      box-shadow: 0 8px 24px rgba(194,98,63,0.12);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header id="mainHeader">
+    <div class="header-top">
+      <a href="homepage.html" class="logo-brand">Skills <span>EX</span></a>
+      <nav class="main-nav" id="mainNav">
+        <ul class="nav-list">
+          <li><a href="homepage.html" class="nav-link">Home</a></li>
+          <li><a href="explore.html" class="nav-link">Explore</a></li>
+          <li><a href="app.html" class="nav-link">Exchange</a></li>
+        </ul>
+        <div id="authHeaderAction">
+          <a href="signup.html" class="nav-cta">Sign Up</a>
+        </div>
+      </nav>
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <section class="explore-hero">
+    <h2 class="hero-title" style="font-size: 48px;">Discover Community Talents</h2>
+    <p class="hero-subtitle" style="margin-inline: auto;">Browse skills being shared in your neighborhood today.</p>
+  </section>
+
+  <main class="explore-container">
+    <div class="explore-search-box">
+      <input type="text" id="exploreSearch" class="hero-search" style="height: 56px; width: 100%;" placeholder="Filter by skill name (e.g. Guitar, Python)..."/>
+      <select id="categoryFilter" class="category-select">
+        <option value="">All Categories</option>
+        <!-- Dynamic options -->
+      </select>
+    </div>
+
+    <div id="exploreGrid" class="explore-grid">
+      <!-- Populated by JS -->
+      <div class="empty-state" style="grid-column: 1/-1;">
+        <div class="empty-icon">🔍</div>
+        <p class="empty-text">Loading community skills...</p>
+      </div>
+    </div>
+  </main>
+
+  <div id="toast"></div>
+
+<script src="./index.js"></script>
+</body>
+</html>

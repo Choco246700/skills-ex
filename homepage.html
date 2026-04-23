@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Skills EX — Welcome!</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,300;9..144,700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body class="landing-page">
+
+  <!-- HEADER -->
+  <header id="mainHeader">
+    <div class="header-top">
+      <a href="homepage.html" class="logo-brand">Skills <span>EX</span></a>
+      <nav class="main-nav" id="mainNav">
+        <ul class="nav-list">
+          <li><a href="homepage.html" class="nav-link">Home</a></li>
+          <li><a href="explore.html" class="nav-link">Explore</a></li>
+          <li><a href="app.html" class="nav-link">Exchange</a></li>
+        </ul>
+        <div id="authHeaderAction">
+          <a href="signup.html" class="nav-cta">Sign Up</a>
+        </div>
+      </nav>
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main class="hero-section">
+    <div class="hero-content">
+      <div class="hero-pill">Only open to KNUST Students ✨</div>
+      <h2 class="hero-title">Trade skills, or just come to learn.</h2>
+      <p class="hero-subtitle">
+        Skills EX is a local community platform where you can trade what you know for what you want to learn, or simply
+        connect with mentors. No money needed.
+      </p>
+
+      <div class="search-container">
+        <form class="hero-search" id="heroSearchForm" action="explore.html" method="GET">
+          <input type="search" id="heroSearchInput" name="q" placeholder="Search skills here...." aria-label="Search skills" required />
+          <button type="submit" class="search-btn">Search</button>
+        </form>
+        <div id="searchResults" class="search-results-dropdown"></div>
+      </div>
+
+      <div class="hero-actions">
+        <a href="app.html" class="btn-primary">Get Started Now</a>
+        <a href="#howItWorks" class="btn-secondary">Learn More</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <img src="./images/fa-barboza-WmgvtRH512o-unsplash.jpg" alt="Mentor smiling" class="hero-image" />
+
+      <div class="floating-tag tag-skills">
+        <div class="tag-icon">↑</div>
+        <div class="tag-content">
+          <span class="tag-value">4</span>
+          <span class="tag-label">Skills Shared</span>
+        </div>
+      </div>
+
+      <div class="floating-tag tag-learners">
+        <div class="tag-icon">↓</div>
+        <div class="tag-content">
+          <span class="tag-value">12</span>
+          <span class="tag-label">Active Learners</span>
+        </div>
+      </div>
+
+      <div class="floating-tag tag-convos">
+        <div class="tag-icon">💬</div>
+        <div class="tag-content">
+          <span class="tag-value">48</span>
+          <span class="tag-label">Conversations</span>
+        </div>
+      </div>
+
+      <div class="floating-tag tag-rating">
+        <div class="tag-icon">⭐</div>
+        <div class="tag-content">
+          <span class="tag-value">4.9</span>
+          <span class="tag-label">Avg Rating</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <section class="bottom-content">
+    <div class="bottom-container">
+
+      <div class="popular-skills">
+        <p class="section-label">Trending</p>
+        <h3 class="popular-skills-title">Discover Your Next Passion</h3>
+        <div class="skills-grid">
+          <a href="app.html?learn=Acoustic%20Guitar" class="popular-skill-item">
+            <img src="./images/skill-guitar.jpg" alt="Acoustic Guitar" class="skill-item-img" />
+            <div class="skill-item-details">
+              <p class="skill-item-category">Music</p>
+              <h4 class="skill-item-title">Acoustic Guitar</h4>
+              <p class="skill-item-tutor">with Alex J.</p>
+            </div>
+            <div class="skill-item-rating">
+              <span class="icon">⭐</span>
+              <span class="score">4.9</span>
+            </div>
+          </a>
+
+          <a href="app.html?learn=Sourdough%20Baking" class="popular-skill-item">
+            <img src="./images/skill-baking.jpg" alt="Baking" class="skill-item-img" />
+            <div class="skill-item-details">
+              <p class="skill-item-category">Culinary</p>
+              <h4 class="skill-item-title">Sourdough Baking</h4>
+              <p class="skill-item-tutor">with Sarah M.</p>
+            </div>
+            <div class="skill-item-rating">
+              <span class="icon">⭐</span>
+              <span class="score">4.8</span>
+            </div>
+          </a>
+
+          <a href="app.html?learn=UX%2FUI%20Principles" class="popular-skill-item">
+            <img src="./images/skill-uxui.jpg" alt="Web Design" class="skill-item-img" />
+            <div class="skill-item-details">
+              <p class="skill-item-category">Tech</p>
+              <h4 class="skill-item-title">UX/UI Principles</h4>
+              <p class="skill-item-tutor">with David K.</p>
+            </div>
+            <div class="skill-item-rating">
+              <span class="icon">⭐</span>
+              <span class="score">5.0</span>
+            </div>
+          </a>
+
+          <a href="app.html?learn=Conversational%20Japanese" class="popular-skill-item">
+            <img src="./images/skill-japanese.jpg" alt="Japanese" class="skill-item-img" />
+            <div class="skill-item-details">
+              <p class="skill-item-category">Language</p>
+              <h4 class="skill-item-title">Conversational Japanese</h4>
+              <p class="skill-item-tutor">with Yuka T.</p>
+            </div>
+            <div class="skill-item-rating">
+              <span class="icon">⭐</span>
+              <span class="score">4.9</span>
+            </div>
+          </a>
+
+          <a href="app.html?learn=Intro%20to%20Python" class="popular-skill-item">
+            <img src="./images/skill-python.jpg" alt="Python Code" class="skill-item-img" />
+            <div class="skill-item-details">
+              <p class="skill-item-category">Tech</p>
+              <h4 class="skill-item-title">Intro to Python</h4>
+              <p class="skill-item-tutor">with Liam O.</p>
+            </div>
+            <div class="skill-item-rating">
+              <span class="icon">⭐</span>
+              <span class="score">4.7</span>
+            </div>
+          </a>
+
+          <a href="app.html?learn=Pasta%20from%20Scratch" class="popular-skill-item">
+            <img src="./images/skill-pasta.jpg" alt="Cooking" class="skill-item-img" />
+            <div class="skill-item-details">
+              <p class="skill-item-category">Culinary</p>
+              <h4 class="skill-item-title">Pasta from Scratch</h4>
+              <p class="skill-item-tutor">with Marco V.</p>
+            </div>
+            <div class="skill-item-rating">
+              <span class="icon">⭐</span>
+              <span class="score">4.9</span>
+            </div>
+          </a>
+
+          <a href="app.html?learn=Digital%20Photography" class="popular-skill-item">
+            <img src="./images/skill-photography.jpg" alt="Photography" class="skill-item-img" />
+            <div class="skill-item-details">
+              <p class="skill-item-category">Art</p>
+              <h4 class="skill-item-title">Digital Photography</h4>
+              <p class="skill-item-tutor">with Elena R.</p>
+            </div>
+            <div class="skill-item-rating">
+              <span class="icon">⭐</span>
+              <span class="score">4.8</span>
+            </div>
+          </a>
+
+          <a href="app.html?learn=Vinyasa%20Yoga" class="popular-skill-item">
+            <img src="./images/skill-yoga.jpg" alt="Yoga" class="skill-item-img" />
+            <div class="skill-item-details">
+              <p class="skill-item-category">Fitness</p>
+              <h4 class="skill-item-title">Vinyasa Yoga</h4>
+              <p class="skill-item-tutor">with Chloe S.</p>
+            </div>
+            <div class="skill-item-rating">
+              <span class="icon">⭐</span>
+              <span class="score">5.0</span>
+            </div>
+          </a>
+
+          <a href="app.html?learn=Adobe%20Illustrator" class="popular-skill-item">
+            <img src="./images/skill-illustrator.jpg" alt="Design" class="skill-item-img" />
+            <div class="skill-item-details">
+              <p class="skill-item-category">Design</p>
+              <h4 class="skill-item-title">Adobe Illustrator</h4>
+              <p class="skill-item-tutor">with Sam T.</p>
+            </div>
+            <div class="skill-item-rating">
+              <span class="icon">⭐</span>
+              <span class="score">4.6</span>
+            </div>
+          </a>
+
+          <a href="app.html?learn=Beginner%20French" class="popular-skill-item">
+            <img src="./images/skill-french.jpg" alt="French" class="skill-item-img" />
+            <div class="skill-item-details">
+              <p class="skill-item-category">Language</p>
+              <h4 class="skill-item-title">Beginner French</h4>
+              <p class="skill-item-tutor">with Marie L.</p>
+            </div>
+            <div class="skill-item-rating">
+              <span class="icon">⭐</span>
+              <span class="score">4.9</span>
+            </div>
+          </a>
+
+          <a href="app.html?learn=Startup%20Pitching" class="popular-skill-item">
+            <img src="./images/skill-startup.jpg" alt="Business" class="skill-item-img" />
+            <div class="skill-item-details">
+              <p class="skill-item-category">Business</p>
+              <h4 class="skill-item-title">Startup Pitching</h4>
+              <p class="skill-item-tutor">with James W.</p>
+            </div>
+            <div class="skill-item-rating">
+              <span class="icon">⭐</span>
+              <span class="score">4.8</span>
+            </div>
+          </a>
+
+          <a href="app.html?learn=Personal%20Finance" class="popular-skill-item">
+            <img src="./images/skill-finance.jpg" alt="Accounting" class="skill-item-img" />
+            <div class="skill-item-details">
+              <p class="skill-item-category">Finance</p>
+              <h4 class="skill-item-title">Personal Finance</h4>
+              <p class="skill-item-tutor">with Robert B.</p>
+            </div>
+            <div class="skill-item-rating">
+              <span class="icon">⭐</span>
+              <span class="score">4.7</span>
+            </div>
+          </a>
+
+          <a href="app.html?learn=Chess%20Openings" class="popular-skill-item">
+            <img src="./images/skill-chess.jpg" alt="Chess" class="skill-item-img" />
+            <div class="skill-item-details">
+              <p class="skill-item-category">Strategy</p>
+              <h4 class="skill-item-title">Chess Openings</h4>
+              <p class="skill-item-tutor">with Garry N.</p>
+            </div>
+            <div class="skill-item-rating">
+              <span class="icon">⭐</span>
+              <span class="score">5.0</span>
+            </div>
+          </a>
+
+          <a href="app.html?learn=Ceramics%20Basics" class="popular-skill-item">
+            <img src="./images/skill-ceramics.jpg" alt="Pottery" class="skill-item-img" />
+            <div class="skill-item-details">
+              <p class="skill-item-category">Crafts</p>
+              <h4 class="skill-item-title">Ceramics Basics</h4>
+              <p class="skill-item-tutor">with Nina P.</p>
+            </div>
+            <div class="skill-item-rating">
+              <span class="icon">⭐</span>
+              <span class="score">4.9</span>
+            </div>
+          </a>
+
+          <a href="app.html?learn=Wilderness%20Lore" class="popular-skill-item">
+            <img src="./images/skill-wilderness.jpg" alt="Hiking" class="skill-item-img" />
+            <div class="skill-item-details">
+              <p class="skill-item-category">Outdoors</p>
+              <h4 class="skill-item-title">Wilderness Lore</h4>
+              <p class="skill-item-tutor">with Ben C.</p>
+            </div>
+            <div class="skill-item-rating">
+              <span class="icon">⭐</span>
+              <span class="score">4.8</span>
+            </div>
+          </a>
+
+          <a href="app.html?learn=Gardening%20Basics" class="popular-skill-item">
+            <img src="./images/skill-gardening.jpg" alt="Gardening" class="skill-item-img" />
+            <div class="skill-item-details">
+              <p class="skill-item-category">Lifestyle</p>
+              <h4 class="skill-item-title">Gardening Basics</h4>
+              <p class="skill-item-tutor">with Mark L.</p>
+            </div>
+            <div class="skill-item-rating">
+              <span class="icon">⭐</span>
+              <span class="score">4.7</span>
+            </div>
+          </a>
+
+          <a href="app.html?learn=Social%20Media%20Marketing" class="popular-skill-item">
+            <img src="./images/skill-marketing.jpg" alt="Marketing" class="skill-item-img" />
+            <div class="skill-item-details">
+              <p class="skill-item-category">Business</p>
+              <h4 class="skill-item-title">Social Media Marketing</h4>
+              <p class="skill-item-tutor">with Sophie R.</p>
+            </div>
+            <div class="skill-item-rating">
+              <span class="icon">⭐</span>
+              <span class="score">4.8</span>
+            </div>
+          </a>
+
+          <a href="app.html?learn=Woodworking%20101" class="popular-skill-item">
+            <img src="./images/skill-woodworking.jpg" alt="Woodworking" class="skill-item-img" />
+            <div class="skill-item-details">
+              <p class="skill-item-category">Crafts</p>
+              <h4 class="skill-item-title">Woodworking 101</h4>
+              <p class="skill-item-tutor">with Tom H.</p>
+            </div>
+            <div class="skill-item-rating">
+              <span class="icon">⭐</span>
+              <span class="score">4.9</span>
+            </div>
+          </a>
+
+          <a href="app.html?learn=Creative%20Writing" class="popular-skill-item">
+            <img src="./images/skill-writing.jpg" alt="Writing" class="skill-item-img" />
+            <div class="skill-item-details">
+              <p class="skill-item-category">Arts</p>
+              <h4 class="skill-item-title">Creative Writing</h4>
+              <p class="skill-item-tutor">with Emily D.</p>
+            </div>
+            <div class="skill-item-rating">
+              <span class="icon">⭐</span>
+              <span class="score">5.0</span>
+            </div>
+          </a>
+
+          <a href="app.html?learn=Data%20Science%20Basis" class="popular-skill-item">
+            <img src="./images/skill-datascience.jpg" alt="Data Science" class="skill-item-img" />
+            <div class="skill-item-details">
+              <p class="skill-item-category">Tech</p>
+              <h4 class="skill-item-title">Data Science Basis</h4>
+              <p class="skill-item-tutor">with Dr. Aris</p>
+            </div>
+            <div class="skill-item-rating">
+              <span class="icon">⭐</span>
+              <span class="score">4.9</span>
+            </div>
+          </a>
+        </div>
+        <div class="carousel-dots" id="skillsDots"></div>
+      </div>
+
+      <div class="hero-features" id="howItWorks">
+        <div class="feature-card">
+          <div class="feature-card-image">
+            <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=400&q=80" alt="Share a Skill" />
+          </div>
+          <div class="feature-card-content">
+            <h3>Share a Skill</h3>
+            <p>Got a talent? Offer it to your community. Whether it's guitar, coding, or baking, everyone has something to teach.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-card-image">
+            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=400&q=80" alt="Find a Mentor" />
+          </div>
+          <div class="feature-card-content">
+            <h3>Find a Mentor</h3>
+            <p>Want to learn something new? Browse through the community to find someone willing to teach you.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-card-image">
+            <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=400&q=80" alt="Connect" />
+          </div>
+          <div class="feature-card-content">
+            <h3>Connect</h3>
+            <p>When interests align, make a connection! Set up a reciprocal exchange, or just learn from an expert.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Carousel Logic
+    document.addEventListener('DOMContentLoaded', () => {
+      const skillsGrid = document.querySelector('.skills-grid');
+      const dotsContainer = document.getElementById('skillsDots');
+      if (skillsGrid && dotsContainer) {
+        const items = skillsGrid.querySelectorAll('.popular-skill-item');
+        items.forEach((_, i) => {
+          const dot = document.createElement('button');
+          dot.className = `carousel-dot ${i === 0 ? 'active' : ''}`;
+          dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+          dot.addEventListener('click', () => {
+            const target = items[i];
+            const scrollLeft = target.offsetLeft - skillsGrid.offsetLeft;
+            skillsGrid.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+          });
+          dotsContainer.appendChild(dot);
+        });
+
+        skillsGrid.addEventListener('scroll', () => {
+          const itemWidth = items[0].offsetWidth + 24;
+          const activeIndex = Math.round(skillsGrid.scrollLeft / itemWidth);
+          document.querySelectorAll('.carousel-dot').forEach((dot, index) => {
+            dot.classList.toggle('active', index === activeIndex);
+          });
+        });
+      }
+    });
+
+    // Mobile Menu & Header Scroll logic is handled in index.js
+
+    // ── Live Search Logic ──
+    const initLiveSearch = () => {
+      const searchInput = document.getElementById('heroSearchInput');
+      const resultsDropdown = document.getElementById('searchResults');
+      const searchForm = document.getElementById('heroSearchForm');
+      const STORAGE_KEY = 'skillswap_users';
+
+      if (!searchInput || !resultsDropdown) return;
+
+      const performSearch = async () => {
+        const query = searchInput.value.trim().toLowerCase();
+        if (query.length < 2) {
+          resultsDropdown.style.display = 'none';
+          return;
+        }
+
+        let users = [];
+        try {
+          // Fetch from backend instead of legacy localStorage
+          users = await apiFetch('/users');
+        } catch (e) {
+          users = [];
+        }
+
+        // Filter unique "teach" skills that match query
+        const matchingSkills = [...new Set(users
+          .map(u => u.teach)
+          .filter(s => s && s.toLowerCase().includes(query))
+        )].slice(0, 8); // Limit results
+
+        if (matchingSkills.length > 0) {
+          resultsDropdown.innerHTML = matchingSkills.map(skill => `
+            <div class="search-result-item" data-skill="${skill}">
+              <span class="result-icon">🔍</span>
+              <span class="result-text">${skill}</span>
+            </div>
+          `).join('');
+          
+          resultsDropdown.style.display = 'block';
+
+          // Add click behavior
+          resultsDropdown.querySelectorAll('.search-result-item').forEach(item => {
+            item.addEventListener('click', () => {
+              searchInput.value = item.getAttribute('data-skill');
+              resultsDropdown.style.display = 'none';
+              searchForm.submit();
+            });
+          });
+        } else if (query.length >= 2) {
+          resultsDropdown.innerHTML = `
+            <div class="search-no-results">
+              <span class="result-icon">✨</span>
+              <div class="no-results-content">
+                <p class="no-results-text">No one is teaching <strong>"${searchInput.value}"</strong> yet.</p>
+                <p class="no-results-sub">Be the first to share this skill!</p>
+              </div>
+            </div>
+          `;
+          resultsDropdown.style.display = 'block';
+        } else {
+          resultsDropdown.style.display = 'none';
+        }
+      };
+
+      searchInput.addEventListener('input', performSearch);
+      searchInput.addEventListener('focus', performSearch);
+
+      // Close dropdown when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!searchInput.contains(e.target) && !resultsDropdown.contains(e.target)) {
+          resultsDropdown.style.display = 'none';
+        }
+      });
+    };
+
+    initLiveSearch();
+  </script>
+  <script src="./index.js"></script>
+</body>
+
+</html>

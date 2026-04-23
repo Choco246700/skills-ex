@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Skills EX — Sign Up</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,300;9..144,700&display=swap" rel="stylesheet"/>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <link rel="stylesheet" href="./styles.css"/>
+  <style>
+    /* Reuse core auth styles */
+    .auth-container { display: grid; grid-template-columns: 1fr 1.1fr; min-height: 100vh; overflow: hidden; }
+    .auth-visual { background: var(--cream); display: flex; flex-direction: column; justify-content: center; padding: 60px; position: relative; }
+    .auth-hero-img { max-width: 100%; height: auto; border-radius: 40px; box-shadow: var(--shadow-hover); animation: fadeUp 0.8s ease both; }
+    .auth-form-section { background: var(--warm-white); display: flex; flex-direction: column; justify-content: center; padding: 80px 120px; position: relative; }
+    .auth-form-container { max-width: 440px; width: 100%; animation: fadeUp 0.6s ease 0.2s both; }
+    .auth-header { margin-bottom: 40px; }
+    .auth-title { font-family: 'Fraunces', serif; font-size: 42px; line-height: 1.1; color: var(--ink); margin-bottom: 12px; }
+    .auth-subtitle { color: var(--muted); font-size: 16px; }
+    .auth-footer { margin-top: 32px; text-align: center; font-size: 14px; color: var(--muted); }
+    .auth-footer a { color: var(--terracotta); font-weight: 700; text-decoration: none; }
+    .auth-footer a:hover { text-decoration: underline; }
+
+    /* Input consistency */
+    input[type="password"], input[type="email"], input[type="text"] {
+       width: 100%; padding: 12px 16px; border: 1.5px solid var(--border); border-radius: 10px; background: var(--warm-white); font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--ink); outline: none; transition: border-color 0.2s;
+    }
+    input:focus { border-color: var(--terracotta); }
+
+    @media (max-width: 1024px) {
+      .auth-container { grid-template-columns: 1fr; }
+      .auth-visual { display: none; }
+      .auth-form-section { padding: 60px 40px; align-items: center; }
+    }
+  </style>
+</head>
+<body class="auth-page">
+  <header id="mainHeader">
+    <div class="header-top">
+      <a href="homepage.html" class="logo-brand">Skills <span>EX</span></a>
+      <nav class="main-nav" id="mainNav">
+        <ul class="nav-list">
+          <li><a href="homepage.html" class="nav-link">Home</a></li>
+          <li><a href="explore.html" class="nav-link">Explore</a></li>
+          <li><a href="app.html" class="nav-link">Exchange</a></li>
+        </ul>
+        <div id="authHeaderAction">
+          <a href="signup.html" class="nav-cta">Sign Up</a>
+        </div>
+      </nav>
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="auth-container">
+    <div class="auth-visual">
+      <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80" alt="Students learning together" class="auth-hero-img" />
+      <div style="margin-top: 40px;">
+        <p class="logo-brand" style="font-size: 32px;">Skills <span>EX</span></p>
+        <p style="color: var(--muted); margin-top: 12px; line-height: 1.6;">
+          Unlock the power of your neighborhood. Trade what you know for what you need.
+        </p>
+      </div>
+    </div>
+
+    <main class="auth-form-section">
+      <div class="auth-form-container">
+        <div class="auth-header">
+          <h1 class="auth-title">Create your account</h1>
+          <p class="auth-subtitle">Join thousands of learners and mentors today.</p>
+        </div>
+
+        <div style="display: flex; justify-content: center; margin-bottom: 24px;">
+          <div id="g_id_onload"
+               data-client_id="104003170147-f6sghra2gg6dogf5ctq3a5c5lpivvkgf.apps.googleusercontent.com"
+               data-callback="handleCredentialResponse"
+               data-auto_prompt="false">
+          </div>
+          <div class="g_id_signin" data-type="standard" data-shape="pill" data-theme="outline" data-text="signup_with" data-size="large" data-logo_alignment="left"></div>
+        </div>
+
+        <div class="auth-divider">Or join with email</div>
+
+        <div class="field">
+          <label for="nameInput">Full Name</label>
+          <input type="text" id="nameInput" placeholder="Grace Hopper" />
+        </div>
+
+        <div class="field">
+          <label for="emailInput">Email Address</label>
+          <input type="email" id="emailInput" placeholder="grace@example.com" />
+        </div>
+
+        <div class="field">
+          <label for="passwordInput">Password</label>
+          <input type="password" id="passwordInput" placeholder="••••••••" />
+        </div>
+
+        <div style="margin-bottom: 32px;">
+          <label style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; text-transform: none; letter-spacing: 0; cursor: pointer; line-height: 1.4;">
+            <input type="checkbox" id="termsCheck" style="width: 18px; height: 18px; margin-top: 2px;" /> 
+            <span>I agree to the <a href="#" style="color: var(--terracotta); font-weight: 600;">Terms of Service</a> and <a href="#" style="color: var(--terracotta); font-weight: 600;">Privacy Policy</a>.</span>
+          </label>
+        </div>
+
+        <button class="btn-submit" onclick="handleSignup()">Join the Community →</button>
+
+        <div class="auth-footer">
+          Already have an account? <a href="login.html">Log In here</a>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="toast"></div>
+
+  <script src="./index.js"></script>
+  <script>
+    function handleSignup() {
+      const name = document.getElementById('nameInput').value.trim();
+      const email = document.getElementById('emailInput').value.trim();
+      const password = document.getElementById('passwordInput').value;
+      const terms = document.getElementById('termsCheck').checked;
+
+      if (!name || !email || !password) {
+        showToast('Please fill out all fields.');
+        return;
+      }
+      if (!validateEmail(email)) {
+        showToast('Please enter a valid email address.');
+        return;
+      }
+      if (!terms) {
+        showToast('Please agree to the terms.');
+        return;
+      }
+
+      // Link to API Fetch (Migration Step)
+      apiFetch('/signup', {
+        method: 'POST',
+        body: JSON.stringify({ name, email, password })
+      }).then(user => {
+        localStorage.setItem('skillswap_auth', JSON.stringify(user));
+        showToast('Account created! Welcome to Skills EX.');
+        setTimeout(() => window.location.href = 'homepage.html', 1500);
+      }).catch(err => {
+        // Error already handled
+      });
+    }
+  </script>
+</body>
+</html>

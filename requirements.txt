@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+sqlmodel
+google-auth
+requests
+email-validator
+gunicorn
