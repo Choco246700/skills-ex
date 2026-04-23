@@ -251,13 +251,26 @@ def get_user_notifications(user_id: int, session: Session = Depends(get_session)
     for a in acknowledged:
         excluded_ids.add(a.target_id)
 
-    notifications = [
-        u for u in all_users 
-        if u.id != user.id 
-        and u.id not in excluded_ids
-        and u.learn 
-        and u.learn.strip().lower() == user.teach.strip().lower()
-    ]
+    notifications = []
+    for other in all_users:
+        if other.id == user_id or other.id in excluded_ids:
+            continue
+            
+        # MUTUAL MATCHING: Notify if they teach what you learn OR you teach what they learn
+        match_found = False
+        u_learn = (user.learn or "").strip().lower()
+        o_teach = (other.teach or "").strip().lower()
+        u_teach = (user.teach or "").strip().lower()
+        o_learn = (other.learn or "").strip().lower()
+
+        if o_teach and u_learn and (o_teach in u_learn or u_learn in o_teach):
+            match_found = True
+        elif u_teach and o_learn and (u_teach in o_learn or o_learn in u_teach):
+            match_found = True
+            
+        if match_found:
+            notifications.append(other)
+            
     return notifications
 
 @app.post("/users/{user_id}/notifications/acknowledge/{target_id}")
