@@ -5,3 +5,5 @@ google-auth
 requests
 email-validator
 gunicorn
+python-multipart
+jinja2

@@ -1,13 +1,41 @@
-    const AUTH_KEY = 'skillswap_auth';
-    const API_URL = window.location.origin;
+    (function() {
+      // Load Confetti and Lucide Icons
+      const confettiScript = document.createElement('script');
+      confettiScript.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js';
+      document.head.appendChild(confettiScript);
 
-    // ── Helper: Email Validation ──
+      const lucideScript = document.createElement('script');
+      lucideScript.src = 'https://unpkg.com/lucide@latest';
+      lucideScript.onload = () => { if(window.lucide) window.lucide.createIcons(); };
+      document.head.appendChild(lucideScript);
+    })();
+
+    const AUTH_KEY = 'skillswap_auth';
+    const THEME_KEY = 'skillswap_theme';
+    const API_URL = (window.location.origin === 'null' || window.location.protocol === 'file:') 
+      ? 'http://127.0.0.1:8000' 
+      : window.location.origin;
+
+    // --- SENIOR TOUCH: Theme Initialization ---
+    (function initTheme() {
+      const saved = localStorage.getItem(THEME_KEY) || 'light';
+      document.documentElement.setAttribute('data-theme', saved);
+    })();
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem(THEME_KEY, next);
+      updateAuthHeader(); 
+    }
+
+    // ── Helper functions ──
     function validateEmail(email) {
       const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return re.test(String(email).toLowerCase());
     }
 
-    // ── Auth helpers ──
     function getAuthUser() {
       try { return JSON.parse(localStorage.getItem(AUTH_KEY)); }
       catch { return null; }
@@ -25,12 +53,18 @@
       if (!navList || !actionArea) return;
 
       const currentPath = window.location.pathname.split('/').pop() || 'homepage.html';
+      
+      // Standard pages available to everyone
       const pages = [
         { name: 'Home', href: 'homepage.html' },
         { name: 'Explore', href: 'explore.html' },
-        { name: 'Exchange', href: 'app.html' },
-        { name: 'Chat', href: 'chat.html' }
+        { name: 'Exchange', href: 'app.html' }
       ];
+
+      // Add Chat link only if logged in (or always if you want it visible)
+      if (user) {
+        pages.push({ name: 'Chat', href: 'chat.html' });
+      }
 
       // 1. Update Core Links
       let navHtml = pages.map(p => {
@@ -44,43 +78,52 @@
       }
       navList.innerHTML = navHtml;
 
-      // 2. Update CTA Area
+      // 2. Update CTA Area (Theme + Profile/Signup)
+      const themeBtn = `<button onclick="toggleTheme()" class="theme-toggle-btn" title="Toggle Theme"><i data-lucide="sun" class="light-icon"></i><i data-lucide="moon" class="dark-icon"></i></button>`;
+
       if (user) {
         let notifCount = 0;
         try {
-          // Check notifications if backend is available
           const notifications = await apiFetch(`/users/${user.id}/notifications`);
           notifCount = notifications.length;
-        } catch (e) {
-          console.warn("Could not fetch notifications");
-        }
+        } catch (e) {}
 
         const isUrl = user.image && user.image.startsWith('http');
         const imgPath = user.image ? (isUrl ? user.image : `./images/${user.image}`) : null;
-        
         const avatarContent = imgPath 
           ? `<img src="${imgPath}" alt="${escHtml(user.name)}" onerror="this.parentElement.innerHTML='${getInitial(user.name)}'">`
           : getInitial(user.name);
-
         const badgeHtml = notifCount > 0 ? `<div class="notification-badge">${notifCount}</div>` : '';
 
         actionArea.innerHTML = `
           <div class="auth-profile-wrap">
-            <a href="notifications.html" style="text-decoration: none;" title="Notifications">
-              <div class="avatar-container">
-                ${badgeHtml}
-                <div class="header-avatar">${avatarContent}</div>
-              </div>
-            </a>
-            <div class="header-user-info" style="margin-right: 12px;">
-              <span class="header-user-name">${escHtml(user.name)}</span>
+            <div style="display: flex; align-items: center; gap: 12px;">
+               <a href="notifications.html" style="text-decoration: none; position: relative;" title="Notifications">
+                 <div class="avatar-container">
+                   ${badgeHtml}
+                   <div class="header-avatar">${avatarContent}</div>
+                 </div>
+               </a>
+               <div class="header-user-info" style="margin-right: 12px; margin-left: 0;">
+                 <span class="header-user-name">${escHtml(user.name)}</span>
+               </div>
             </div>
-            <button onclick="logout()" class="nav-cta logout-btn-refined">Log Out</button>
+            <button onclick="logout()" class="nav-cta logout-btn-refined">
+              <i data-lucide="log-out" style="width: 14px; height: 14px; margin-right: 4px;"></i> Log Out
+            </button>
+            ${themeBtn}
           </div>`;
       } else {
-        const isSignup = currentPath === 'signup.html' ? 'active' : '';
-        actionArea.innerHTML = `<a href="signup.html" class="nav-cta ${isSignup}">Sign Up</a>`;
+        const isSignup = (currentPath === 'signup.html') ? 'active' : '';
+        actionArea.innerHTML = `
+          <div class="auth-buttons">
+            <a href="signup.html" class="nav-cta ${isSignup}">Sign Up</a>
+            ${themeBtn}
+          </div>`;
       }
+      
+      // Refresh icons
+      if (window.lucide) window.lucide.createIcons();
     }
 
     // ── API helpers ──
@@ -125,18 +168,58 @@
       const learn = document.getElementById('learnInput').value.trim();
 
       try {
+        // --- SENIOR TOUCH: Pre-update match check ---
+        const oldMatches = await apiFetch('/matches');
+        const oldMatchCount = oldMatches.length;
+
         const updatedUser = await apiFetch(`/users/${user.id}`, {
           method: 'PATCH',
-          body: JSON.stringify({ teach, learn, image: "" }) // Send empty string to trigger backend auto-fetch
+          body: JSON.stringify({ teach, learn, image: "" }) 
         });
 
-        // Update local storage so changes reflect immediately
         localStorage.setItem(AUTH_KEY, JSON.stringify(updatedUser));
         
-        // Refresh grid
+        // --- SENIOR TOUCH: Post-update check for new celebration ---
+        const newMatches = await apiFetch('/matches');
+        if (newMatches.length > oldMatchCount) {
+          triggerCelebration(newMatches[newMatches.length - 1]);
+        } else {
+          showToast(`Profile updated! No new matches yet. 🎉`);
+        }
+
         render();
-        showToast(`Your profile has been updated! 🎉`);
       } catch (e) {}
+    }
+
+    function triggerCelebration(match) {
+      // 1. Confetti burst
+      if (window.confetti) {
+        confetti({
+          particleCount: 150,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ['#c2623f', '#425c5a', '#f5f1e8']
+        });
+      }
+
+      // 2. Show Modal
+      const modal = document.createElement('div');
+      modal.className = 'celebration-modal';
+      modal.innerHTML = `
+        <div class="celebration-content">
+          <div class="celebration-stars"><i data-lucide="sparkles"></i></div>
+          <h2 class="celebration-title">It's a Match!</h2>
+          <p class="celebration-text">You've just found a new connection in the community.</p>
+          <div class="celebration-match-preview">
+             <span>${escHtml(match.a?.name || match.teacher?.name)}</span>
+             <span class="celebration-arrow"><i data-lucide="repeat"></i></span>
+             <span>${escHtml(match.b?.name || match.learner?.name)}</span>
+          </div>
+          <button onclick="this.closest('.celebration-modal').remove()" class="celebration-btn">Awesome!</button>
+        </div>
+      `;
+      document.body.appendChild(modal);
+      if (window.lucide) window.lucide.createIcons();
     }
 
     async function deleteUser(id) {
@@ -242,23 +325,39 @@
           if (users.length === 0) {
             grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><p class="empty-text">No members yet</p></div>`;
           } else {
-            grid.innerHTML = users.map((u, i) => `
-              <div class="user-card" style="animation-delay:${i * 0.04}s">
-                <button class="card-delete" onclick="deleteUser(${u.id})" title="Remove">✕</button>
-                <div class="user-avatar">${getInitial(u.name)}</div>
-                <div class="user-name">${escHtml(u.name)}</div>
-                ${u.teach ? `
-                  <div class="skill-badge">
-                    <div class="skill-icon icon-teach">↑</div>
-                    <div><span class="skill-label">Teaches</span><span class="skill-text">${escHtml(u.teach)}</span></div>
-                  </div>` : ''}
-                ${u.learn ? `
-                  <div class="skill-badge">
-                    <div class="skill-icon icon-learn">↓</div>
-                    <div><span class="skill-label">Wants to Learn</span><span class="skill-text">${escHtml(u.learn)}</span></div>
-                  </div>` : ''}
-              </div>`).join('');
+            grid.innerHTML = users.map((u, i) => {
+              // --- SENIOR TOUCH: Badge Logic ---
+              let badgesHtml = '';
+              badgesHtml += `<span class="user-badge b-verified" title="Verified Account"><i data-lucide="shield-check"></i></span>`;
+              if (u.teach) {
+                badgesHtml += `<span class="user-badge b-expert" title="Skill Expert"><i data-lucide="award"></i></span>`;
+              }
+              if (u.learn) {
+                badgesHtml += `<span class="user-badge b-learner" title="Active Learner"><i data-lucide="book-open"></i></span>`;
+              }
+
+              return `
+                <div class="user-card" style="animation-delay:${i * 0.04}s">
+                  <button class="card-delete" onclick="deleteUser(${u.id})" title="Remove">✕</button>
+                  <div class="user-card-header">
+                    <div class="user-avatar">${getInitial(u.name)}</div>
+                    <div class="badge-container">${badgesHtml}</div>
+                  </div>
+                  <div class="user-name">${escHtml(u.name)}</div>
+                  <div class="user-skill-previews">
+                    ${u.teach ? `
+                      <div class="mini-skill teach">
+                        <i data-lucide="arrow-up-right"></i> ${escHtml(u.teach)}
+                      </div>` : ''}
+                    ${u.learn ? `
+                      <div class="mini-skill learn">
+                        <i data-lucide="arrow-down-right"></i> ${escHtml(u.learn)}
+                      </div>` : ''}
+                  </div>
+                </div>`;
+            }).join('');
           }
+          if (window.lucide) window.lucide.createIcons();
         }
 
         // Matches
@@ -550,11 +649,73 @@
     }
     function escHtml(str) { return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
+    function initLiveSearch() {
+      const input = document.getElementById('heroSearchInput');
+      const results = document.getElementById('searchResults');
+      const searchForm = document.getElementById('heroSearchForm');
+      if (!input || !results) return;
+
+      const performSearch = async () => {
+        const query = input.value.trim().toLowerCase();
+        if (query.length < 2) { results.style.display = 'none'; return; }
+        
+        try {
+          const users = await apiFetch('/users');
+          
+          // Filter unique skills that match query
+          const matchingSkills = [...new Set(users
+            .map(u => u.teach)
+            .filter(s => s && s.toLowerCase().includes(query))
+          )].slice(0, 8);
+
+          if (matchingSkills.length > 0) {
+            results.innerHTML = matchingSkills.map(skill => `
+              <div class="search-result-item" onclick="selectSkill('${escHtml(skill)}')">
+                <i data-lucide="search" style="width:16px; opacity:0.6;"></i>
+                <div class="result-info">
+                  <div class="result-text">${escHtml(skill)}</div>
+                  <div class="result-sub">Trending Skill</div>
+                </div>
+              </div>`).join('');
+            results.style.display = 'block';
+            if (window.lucide) window.lucide.createIcons();
+          } else {
+            results.innerHTML = `
+              <div class="search-no-results">
+                <i data-lucide="sparkles" style="width:20px; color:var(--terracotta);"></i>
+                <div class="no-results-content">
+                  <p class="no-results-text">No one is teaching <strong>"${escHtml(query)}"</strong> yet.</p>
+                  <p class="no-results-sub">Be the first to share this skill!</p>
+                </div>
+              </div>`;
+            results.style.display = 'block';
+            if (window.lucide) window.lucide.createIcons();
+          }
+        } catch (e) {}
+      };
+
+      // Global skill selection helper
+      window.selectSkill = (skill) => {
+        input.value = skill;
+        results.style.display = 'none';
+        if (searchForm) searchForm.submit();
+        else window.location.href = `explore.html?q=${encodeURIComponent(skill)}`;
+      };
+
+      input.addEventListener('input', performSearch);
+      input.addEventListener('focus', performSearch);
+
+      document.addEventListener('click', (e) => { 
+        if (!input.contains(e.target) && !results.contains(e.target)) results.style.display = 'none'; 
+      });
+    }
+
     // ── Init ──
     document.addEventListener('DOMContentLoaded', () => {
       populateCategories();
       updateAuthHeader();
       render();
+      initLiveSearch();
 
       const user = getAuthUser();
       

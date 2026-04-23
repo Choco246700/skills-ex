@@ -96,16 +96,29 @@
         </div>
       </section>
 
-      <!-- Connections Column -->
-      <section>
-        <div class="section-header">
-          <span class="section-title">Recent Connections</span>
-          <span class="pill pill-sage" id="matchCount">0 found</span>
-        </div>
-        <div id="matchesContainer">
-          <!-- Populated by JS -->
-        </div>
-      </section>
+      <!-- Right Column: Stats & Connections -->
+      <aside>
+        <!-- Category Stats -->
+        <section style="margin-bottom: 48px;">
+           <div class="section-header">
+             <span class="section-title">Category Pulse</span>
+           </div>
+           <div id="categoryGrid" style="display: grid; gap: 12px;">
+             <!-- Populated by JS -->
+           </div>
+        </section>
+
+        <!-- Recent Connections -->
+        <section>
+          <div class="section-header">
+            <span class="section-title">Recent Connections</span>
+            <span class="pill pill-sage" id="matchCount">0 found</span>
+          </div>
+          <div id="matchesContainer">
+            <!-- Populated by JS -->
+          </div>
+        </section>
+      </aside>
 
     </div>
   </main>

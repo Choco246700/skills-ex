@@ -1,5 +1,7 @@
     const AUTH_KEY = 'skillswap_auth';
-    const API_URL = 'http://localhost:8000'; // Point this to your live production API URL later
+    const API_URL = (window.location.origin === 'null' || window.location.protocol === 'file:') 
+      ? 'http://127.0.0.1:8000' 
+      : window.location.origin;
 
     // ── Helper: Email Validation ──
     function validateEmail(email) {
@@ -93,11 +95,19 @@
             ...options.headers
           }
         });
-        if (!response.ok) {
-          const err = await response.json();
-          throw new Error(err.detail || 'API Error');
+
+        let data;
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+          data = await response.json();
+        } else {
+          data = { detail: await response.text() };
         }
-        return await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.detail || `API Error: ${response.status}`);
+        }
+        return data;
       } catch (err) {
         console.error('Fetch Error:', err);
         showToast(err.message);
@@ -225,7 +235,25 @@
         if (statUsersEl) statUsersEl.textContent = users.length;
         if (statMatchesEl) statMatchesEl.textContent = matches.length;
         if (statSkillsEl) statSkillsEl.textContent = uniqueSkills.size;
-        if (userCountEl) userCountEl.textContent = users.length + (users.length === 1 ? ' person' : ' people');
+        if (matchCountEl) matchCountEl.textContent = matches.length + ' found';
+        if (userCountEl) userCountEl.textContent = users.length + ' people';
+
+        // --- SENIOR TOUCH: Category Stats ---
+        const categoryGrid = document.getElementById('categoryGrid');
+        if (categoryGrid) {
+           const counts = {};
+           users.forEach(u => {
+              const cat = u.category || 'New Members';
+              counts[cat] = (counts[cat] || 0) + 1;
+           });
+           
+           categoryGrid.innerHTML = Object.entries(counts).sort((a,b) => b[1]-a[1]).map(([cat, count]) => `
+             <div style="background: white; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-weight: 600; color: var(--ink); font-size: 14px;">${escHtml(cat)}</span>
+                <span class="pill pill-terra">${count}</span>
+             </div>
+           `).join('');
+        }
         if (matchCountEl) matchCountEl.textContent = matches.length + ' found';
 
         // Users Grid

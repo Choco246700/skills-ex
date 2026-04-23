@@ -45,6 +45,10 @@ async def add_security_headers(request, call_next):
 def read_root():
     return RedirectResponse(url="/homepage.html")
 
+@app.get("/admin.html")
+def admin_redirect():
+    return RedirectResponse(url="/admin-portal/index.html")
+
 @app.on_event("startup")
 def on_startup():
     create_db_and_tables()

@@ -9,6 +9,7 @@
     href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,300;9..144,700&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="./styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 
 <body class="landing-page">
@@ -35,7 +36,7 @@
 
   <main class="hero-section">
     <div class="hero-content">
-      <div class="hero-pill">Only open to KNUST Students ✨</div>
+      <div class="hero-pill">Only open to KNUST Students <i data-lucide="sparkles" style="width:12px; height:12px; margin-left:4px;"></i></div>
       <h2 class="hero-title">Trade skills, or just come to learn.</h2>
       <p class="hero-subtitle">
         Skills EX is a local community platform where you can trade what you know for what you want to learn, or simply
@@ -57,30 +58,17 @@
     </div>
 
     <div class="hero-visual">
-      <img src="./images/fa-barboza-WmgvtRH512o-unsplash.jpg" alt="Mentor smiling" class="hero-image" />
-
+      <img src="./images/fa-barboza-WmgvtRH512o-unsplash.jpg" alt="Students learning together" class="hero-image" />
       <div class="floating-tag tag-skills">
-        <div class="tag-icon">↑</div>
-        <div class="tag-content">
-          <span class="tag-value">4</span>
-          <span class="tag-label">Skills Shared</span>
-        </div>
+        <div class="tag-icon"><i data-lucide="code"></i></div>
+        <div class="tag-content"><span class="tag-value">850+</span><span class="tag-label">Skills</span></div>
       </div>
-
+      
       <div class="floating-tag tag-learners">
-        <div class="tag-icon">↓</div>
-        <div class="tag-content">
-          <span class="tag-value">12</span>
-          <span class="tag-label">Active Learners</span>
+        <div class="avatar-stack">
+          <img src="./images/community_avatars.png" alt="Community Members" style="height: 32px; width: auto; object-fit: cover; border-radius: 100px;">
         </div>
-      </div>
-
-      <div class="floating-tag tag-convos">
-        <div class="tag-icon">💬</div>
-        <div class="tag-content">
-          <span class="tag-value">48</span>
-          <span class="tag-label">Conversations</span>
-        </div>
+        <div class="tag-content" style="margin-left: 8px;"><span class="tag-value">1.2k+</span><span class="tag-label">Learners</span></div>
       </div>
 
       <div class="floating-tag tag-rating">
@@ -89,6 +77,11 @@
           <span class="tag-value">4.9</span>
           <span class="tag-label">Avg Rating</span>
         </div>
+      </div>
+
+      <div class="floating-tag tag-convos">
+        <div class="tag-icon" style="background: rgba(194,98,63,0.15); color: var(--terracotta);"><i data-lucide="message-square"></i></div>
+        <div class="tag-content"><span class="tag-value">Live</span><span class="tag-label">Chats</span></div>
       </div>
     </div>
   </main>
@@ -426,82 +419,8 @@
 
     // Mobile Menu & Header Scroll logic is handled in index.js
 
-    // ── Live Search Logic ──
-    const initLiveSearch = () => {
-      const searchInput = document.getElementById('heroSearchInput');
-      const resultsDropdown = document.getElementById('searchResults');
-      const searchForm = document.getElementById('heroSearchForm');
-      const STORAGE_KEY = 'skillswap_users';
-
-      if (!searchInput || !resultsDropdown) return;
-
-      const performSearch = async () => {
-        const query = searchInput.value.trim().toLowerCase();
-        if (query.length < 2) {
-          resultsDropdown.style.display = 'none';
-          return;
-        }
-
-        let users = [];
-        try {
-          // Fetch from backend instead of legacy localStorage
-          users = await apiFetch('/users');
-        } catch (e) {
-          users = [];
-        }
-
-        // Filter unique "teach" skills that match query
-        const matchingSkills = [...new Set(users
-          .map(u => u.teach)
-          .filter(s => s && s.toLowerCase().includes(query))
-        )].slice(0, 8); // Limit results
-
-        if (matchingSkills.length > 0) {
-          resultsDropdown.innerHTML = matchingSkills.map(skill => `
-            <div class="search-result-item" data-skill="${skill}">
-              <span class="result-icon">🔍</span>
-              <span class="result-text">${skill}</span>
-            </div>
-          `).join('');
-          
-          resultsDropdown.style.display = 'block';
-
-          // Add click behavior
-          resultsDropdown.querySelectorAll('.search-result-item').forEach(item => {
-            item.addEventListener('click', () => {
-              searchInput.value = item.getAttribute('data-skill');
-              resultsDropdown.style.display = 'none';
-              searchForm.submit();
-            });
-          });
-        } else if (query.length >= 2) {
-          resultsDropdown.innerHTML = `
-            <div class="search-no-results">
-              <span class="result-icon">✨</span>
-              <div class="no-results-content">
-                <p class="no-results-text">No one is teaching <strong>"${searchInput.value}"</strong> yet.</p>
-                <p class="no-results-sub">Be the first to share this skill!</p>
-              </div>
-            </div>
-          `;
-          resultsDropdown.style.display = 'block';
-        } else {
-          resultsDropdown.style.display = 'none';
-        }
-      };
-
-      searchInput.addEventListener('input', performSearch);
-      searchInput.addEventListener('focus', performSearch);
-
-      // Close dropdown when clicking outside
-      document.addEventListener('click', (e) => {
-        if (!searchInput.contains(e.target) && !resultsDropdown.contains(e.target)) {
-          resultsDropdown.style.display = 'none';
-        }
-      });
-    };
-
-    initLiveSearch();
+    // Mobile Menu & Header Scroll logic is handled in index.js
+    // Live Search logic is now consolidated in index.js
   </script>
   <script src="./index.js"></script>
 </body>
